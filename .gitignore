@@ -1,0 +1,12 @@
+# Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Large Model Files - DO NOT COMMIT
+distilbart-cnn-6-6/
+
+# VS Code settings
+.vscode/
