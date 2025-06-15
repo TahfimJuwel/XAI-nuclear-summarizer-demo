@@ -18,24 +18,19 @@ nltk.data.path.append('./nltk_data')
 @st.cache_resource
 def load_model():
     """
-    Loads the DistilBART model and tokenizer from a local path.
+    Loads the DistilBART model and tokenizer from the Hugging Face Hub.
+    This is the version for cloud deployment.
     """
-    # This path MUST match the folder name you created for the model files.
-    model_path = "distilbart-cnn-6-6"
-
-    # Check if the model directory exists before trying to load
-    if not os.path.exists(model_path):
-        st.error(f"Model directory not found. Please ensure the model files are in a folder named '{model_path}'.")
-        return None
-
+    # The model identifier on Hugging Face
+    model_name = "sshleifer/distilbart-cnn-6-6"
     try:
-        # Load the model and tokenizer from the local folder
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
-        model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
+        # Load the model and tokenizer directly from the Hub
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
         summarizer = pipeline("summarization", model=model, tokenizer=tokenizer)
         return summarizer
     except Exception as e:
-        st.error(f"An error occurred while loading the model: {e}")
+        st.error(f"An error occurred while loading the model from Hugging Face: {e}")
         return None
 
 # --- 2. HELPER FUNCTIONS FOR XAI ---
